@@ -13,7 +13,7 @@ MinNeutralPtSlope_factors=(
 0.0
 )
 
-IDIR=/eos/user/t/tchatzis/PUPPI_samples/$1
+IDIR=/eos/user/r/rhaberle/PUPPI_samples/$1
 ODIR=./tuning_$1/driver_output
 
 FOUND_ODIR=false
@@ -41,7 +41,7 @@ for recoKey in "${recoKeys[@]}"; do
       # ouput dir: if already exists remove it
       if [ -d ./${ODIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor} ]; then rm -rf ./${ODIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}; fi
       # run the batch driver to prepare the HTC jobs
-      batch_driver.py -l 0 -n 50000 -p JMETriggerAnalysisDriverRun3 \
+      python3 batch_driver.py -l 0 -n 50000 -p JMETriggerAnalysisDriverRun3 \
        -i ${IDIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/*.root \
        -od ./${ODIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor} \
        -o ./${ODIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor} \
@@ -51,7 +51,7 @@ for recoKey in "${recoKeys[@]}"; do
 done
 
 # run the batch monitor to submit the jobs
-batch_monitor.py -i ${ODIR} -r
+python3 batch_monitor.py -i ${ODIR} -r
 
 
 unset recoKeys MinNeutralPt_factors MinNeutralPtSlope_factors 

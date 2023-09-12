@@ -13,8 +13,8 @@ MinNeutralPtSlope_factors=(
 0.0
 )
 
-NTUPLES_IDIR=/eos/user/t/tchatzis/PUPPI_samples/$1
-NTUPLES_ODIR=/eos/user/t/tchatzis/PUPPI_samples/$1
+NTUPLES_IDIR=/eos/user/r/rhaberle/PUPPI_samples/$1
+NTUPLES_ODIR=/eos/user/r/rhaberle/PUPPI_samples/$1
 
 FOUND_NTUPLES_ODIR=false
 
@@ -27,16 +27,20 @@ for recoKey in "${recoKeys[@]}"; do
       find ${NTUPLES_IDIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor} -name "*.root" -type 'f' -size -10k -delete
       
       # add the ntuples jobs from input dir
-      hadd_ntuples.py -i ${NTUPLES_IDIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/Run3Winter21_QCD_Pt15to7000_14TeV_PU -o ${NTUPLES_ODIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/ -l 0
-      hadd_ntuples.py -i ${NTUPLES_IDIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/Run3Winter21_VBF_HToInvisible_14TeV_PU -o ${NTUPLES_ODIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/ -l 0
+      python3 hadd_ntuples.py -i ${NTUPLES_IDIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/Run3Summer22_QCD_Pt15to7000_14TeV_PU -o ${NTUPLES_ODIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/ -l 0
+      #hadd_ntuples.py -i ${NTUPLES_IDIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/Run3Winter21_VBF_HToInvisible_14TeV_PU -o ${NTUPLES_ODIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/ -l 0
       #hadd_ntuples.py -i ${NTUPLES_IDIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/Run3Winter21_DYToLL -o ${NTUPLES_ODIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/ -l 0
       
       #hadd_ntuples.py -i ${NTUPLES_IDIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/Run3Winter21_TT -o ${NTUPLES_ODIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/ -l 0
       #hadd_ntuples.py -i ${NTUPLES_IDIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/Run3Winter22_TT -o ${NTUPLES_ODIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/ -l 0
 
+      #INITIALLY
+      #cp ${CMSSW_BASE}/src/JMETriggerAnalysis/NTuplizers/test/scripts/$1/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/Run3Winter21_QCD_Pt15to7000_14TeV_PU/cfg.py ${NTUPLES_ODIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/cfg_qcd.py
       # save the configuration file from jobs directory
-      cp ${CMSSW_BASE}/src/JMETriggerAnalysis/NTuplizers/test/scripts/$1/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/Run3Winter21_QCD_Pt15to7000_14TeV_PU/cfg.py ${NTUPLES_ODIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/cfg_qcd.py
-      cp ${CMSSW_BASE}/src/JMETriggerAnalysis/NTuplizers/test/scripts/$1/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/Run3Winter21_VBF_HToInvisible_14TeV_PU/cfg.py ${NTUPLES_ODIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/cfg_higgs.py
+      cp ${CMSSW_BASE}/src/JMETriggerAnalysis/NTuplizers/test/crab3_MC_QCD_PU.py ${NTUPLES_ODIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/cfg_qcd.py
+
+
+      #cp ${CMSSW_BASE}/src/JMETriggerAnalysis/NTuplizers/test/scripts/$1/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/Run3Winter21_VBF_HToInvisible_14TeV_PU/cfg.py ${NTUPLES_ODIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/cfg_higgs.py
       #cp ${CMSSW_BASE}/src/JMETriggerAnalysis/NTuplizers/test/scripts/$1/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/Run3Winter21_DYToLL/cfg.py ${NTUPLES_ODIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/cfg_qcd.py
       
       #cp ${CMSSW_BASE}/src/JMETriggerAnalysis/NTuplizers/test/scripts/$1/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/Run3Winter21_TT/cfg.py ${NTUPLES_ODIR}/${recoKey}/MinNeutralPt_${MinNeutralPt_factor}/MinNeutralPtSlope_${MinNeutralPtSlope_factor}/cfg_qcd.py

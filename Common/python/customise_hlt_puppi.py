@@ -761,6 +761,15 @@ def addPaths_MC_JMEPFPuppi(process,listOfPaths):
         offset = cms.uint32(0)
     )
 
+    process.hltPrePFPuppiJet60 = cms.EDFilter("HLTPrescaler",
+        L1GtReadoutRecordTag = cms.InputTag("hltGtStage2Digis"),
+        offset = cms.uint32(0)
+    )
+    process.hltPrePFPuppiJet110 = cms.EDFilter("HLTPrescaler",
+        L1GtReadoutRecordTag = cms.InputTag("hltGtStage2Digis"),
+        offset = cms.uint32(0)
+    )
+
     process.hltPFPuppiJetsCorrectedMatchedToCaloJets10 = cms.EDProducer("HLTPFJetsMatchedToFilteredCaloJetsProducer",
         maxDeltaR = cms.double(0.5),
         src = cms.InputTag("hltAK4PFPuppiJetsCorrected"),
@@ -768,6 +777,22 @@ def addPaths_MC_JMEPFPuppi(process,listOfPaths):
         triggerJetsType = cms.int32(85)
     )
 
+    process.hltPFPuppiJetsCorrectedMatchedToCaloJets40 = cms.EDProducer("HLTPFJetsMatchedToFilteredCaloJetsProducer",
+        maxDeltaR = cms.double(0.5),
+        src = cms.InputTag("hltAK4PFPuppiJetsCorrected"),
+        triggerJetsFilter = cms.InputTag("hltSingleAK4CaloJet40"),
+        triggerJetsType = cms.int32(85)
+    )
+
+    process.hltPFPuppiJetsCorrectedMatchedToCaloJets80 = cms.EDProducer("HLTPFJetsMatchedToFilteredCaloJetsProducer",
+        maxDeltaR = cms.double(0.5),
+        src = cms.InputTag("hltAK4PFPuppiJetsCorrected"),
+        triggerJetsFilter = cms.InputTag("hltSingleAK4CaloJet80"),
+        triggerJetsType = cms.int32(85)
+    )
+
+
+    '''
     process.hltSinglePFPuppiJet40 = cms.EDFilter("HLT1PFJet",
         MaxEta = cms.double(5.0),
         MaxMass = cms.double(-1.0),
@@ -780,8 +805,33 @@ def addPaths_MC_JMEPFPuppi(process,listOfPaths):
         saveTags = cms.bool(True),
         triggerType = cms.int32(85)
     )
+    '''
+    process.hltSinglePFPuppiJet60 = cms.EDFilter("HLT1PFJet",
+        MaxEta = cms.double(5.0),
+        MaxMass = cms.double(-1.0),
+        MinE = cms.double(-1.0),
+        MinEta = cms.double(-1.0),
+        MinMass = cms.double(-1.0),
+        MinN = cms.int32(1),
+        MinPt = cms.double(60.0),
+        inputTag = cms.InputTag("hltPFPuppiJetsCorrectedMatchedToCaloJets40"),
+        saveTags = cms.bool(True),
+        triggerType = cms.int32(85)
+    )
+    process.hltSinglePFPuppiJet110 = cms.EDFilter("HLT1PFJet",
+        MaxEta = cms.double(5.0),
+        MaxMass = cms.double(-1.0),
+        MinE = cms.double(-1.0),
+        MinEta = cms.double(-1.0),
+        MinMass = cms.double(-1.0),
+        MinN = cms.int32(1),
+        MinPt = cms.double(110.0),
+        inputTag = cms.InputTag("hltPFPuppiJetsCorrectedMatchedToCaloJets80"),
+        saveTags = cms.bool(True),
+        triggerType = cms.int32(85)
+    )
 
-
+    '''
     process.HLT_PFPuppiJet40_v1 = cms.Path(
         process.SimL1Emulator
       + process.HLTBeginSequence 
@@ -796,10 +846,44 @@ def addPaths_MC_JMEPFPuppi(process,listOfPaths):
       + process.HLTEndSequence
     )
     
+
+    process.HLT_PFPuppiJet60_v1 = cms.Path(
+        process.SimL1Emulator
+      + process.HLTBeginSequence 
+      + process.hltL1sSingleJet35                # L1 seed
+      + process.hltPrePFPuppiJet60            # prescale filter
+      + process.HLTAK4CaloJetsSequence        # produce calo jets
+      + process.hltSingleAK4CaloJet40            # filter calos > 10 GeV (for matching - see later)  
+      + process.HLTPFPuppiSequence            # produce pf particles and puppi weights
+      + process.HLTAK4PFPuppiJetsSequence     # make AK4 jets reconstruction using puppi weights + calibrations
+      + process.hltPFPuppiJetsCorrectedMatchedToCaloJets40  # match puppi to calo jets with dR<0.5 
+      + process.hltSinglePFPuppiJet60              # filter puppi jets with pT>40GeV
+      + process.HLTEndSequence
+    )
+
+
+    process.HLT_PFPuppiJet110_v1 = cms.Path(
+        process.SimL1Emulator
+      + process.HLTBeginSequence 
+      + process.hltL1sSingleJet90                # L1 seed
+      + process.hltPrePFPuppiJet110            # prescale filter
+      + process.HLTAK4CaloJetsSequence        # produce calo jets
+      + process.hltSingleAK4CaloJet80            # filter calos > 10 GeV (for matching - see later)  
+      + process.HLTPFPuppiSequence            # produce pf particles and puppi weights
+      + process.HLTAK4PFPuppiJetsSequence     # make AK4 jets reconstruction using puppi weights + calibrations
+      + process.hltPFPuppiJetsCorrectedMatchedToCaloJets80  # match puppi to calo jets with dR<0.5 
+      + process.hltSinglePFPuppiJet110              # filter puppi jets with pT>40GeV
+      + process.HLTEndSequence
+    )
+    '''
+
+    '''
     ## adding paths in "trigger menu"
     # modify this list of names with any new path
     newPathNames = [
-       'HLT_PFPuppiJet40_v1'
+       'HLT_PFPuppiJet40_v1',
+       'HLT_PFPuppiJet60_v1',
+       'HLT_PFPuppiJet110_v1'
     ] 
     
     # Adds the paths in the menu
@@ -814,5 +898,8 @@ def addPaths_MC_JMEPFPuppi(process,listOfPaths):
     if process.schedule_():
       process.schedule_().append(process.MC_JMEPFPuppi_v1)
       process.schedule_().append(process.HLT_PFPuppiJet40_v1)
+      process.schedule_().append(process.HLT_PFPuppiJet60_v1)
+      process.schedule_().append(process.HLT_PFPuppiJet110_v1)
+    '''
 
     return [process,listOfPaths]

@@ -45,6 +45,9 @@ bool JMETriggerAnalysisDriverRun3::jetBelongsToCategory(const std::string& jetCo
   else if (categLabel == "_HF") {
     ret = (3.0 <= jetAbsEta) and (jetAbsEta < 5.0);
   } 
+  else if(categLabel == "_Central"){
+    ret = (jetAbsEta < 2.5);
+  }
 
   return ret;
 }
@@ -68,7 +71,7 @@ void JMETriggerAnalysisDriverRun3::init(){
     
       "_HF",
 
-
+      "_Central",
     
   };
 
