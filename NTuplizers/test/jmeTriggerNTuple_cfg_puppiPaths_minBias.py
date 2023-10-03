@@ -15,7 +15,7 @@ opts.register('skipEvents', 0,
               vpo.VarParsing.varType.int,
               'number of events to be skipped')
 
-opts.register('dumpPython', None,
+opts.register('dumpPython', 'config.py',
               vpo.VarParsing.multiplicity.singleton,
               vpo.VarParsing.varType.string,
               'path to python file with content of cms.Process')
@@ -50,7 +50,7 @@ opts.register('reco', 'HLT_Run3TRK',
               vpo.VarParsing.varType.string,
               'keyword to define HLT reconstruction')
 
-opts.register('output', 'out.root',
+opts.register('output', 'out_minBias.root',
               vpo.VarParsing.multiplicity.singleton,
               vpo.VarParsing.varType.string,
               'path to output ROOT file')
@@ -449,14 +449,14 @@ process.JMETriggerNTuple = cms.EDAnalyzer('JMETriggerNTuple',
   recoPFMETCollections = cms.PSet(
 
     hltPFMET = cms.InputTag('hltPFMETProducer'),
-    hltPFMETTypeOne = cms.InputTag('hltPFMETTypeOne'),
+    #hltPFMETTypeOne = cms.InputTag('hltPFMETTypeOne'),
 
     #hltPFCHSMET = cms.InputTag('hltPFCHSMET'),
     #hltPFCHSMETTypeOne = cms.InputTag('hltPFCHSMETTypeOne'),
 
     #hltPFPuppiMET = cms.InputTag('hltPFPuppiMET'),
 
-    #hltPFPuppiMETTypeOne = cms.InputTag('hltPFPuppiMETTypeOne'),
+    hltPFPuppiMETTypeOne = cms.InputTag('hltPFPuppiMETTypeOne'),
   ),
   
 
@@ -503,7 +503,7 @@ if opts.useMixedTrk:
 
 # max number of events to be processed
 #process.maxEvents.input = opts.maxEvents
-process.maxEvents.input = 1000
+process.maxEvents.input = 10000
 
 # number of events to be skipped
 process.source.skipEvents = cms.untracked.uint32(opts.skipEvents)

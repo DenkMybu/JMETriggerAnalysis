@@ -87,8 +87,9 @@ elif opts.reco == 'HLT_Run3TRK':
 
   #for DATA 2022 D
   #from JMETriggerAnalysis.Common.configs.HLT_dev_CMSSW_12_4_0_GRun_era2022D_configDump import cms, process
+  from JMETriggerAnalysis.Common.configs.HLT_dev_CMSSW_12_4_0_GRun_era2022D_MinnBias_configDump import cms, process
   #for JetMET 2022 D
-  from JMETriggerAnalysis.Common.configs.HLT_dev_CMSSW_12_4_0_GRun_era2022D_JetMET_configDump import cms, process
+  #from JMETriggerAnalysis.Common.configs.HLT_dev_CMSSW_12_4_0_GRun_era2022D_JetMET_configDump import cms, process
   #for MC with PU mixing
   #from JMETriggerAnalysis.Common.configs.HLT_dev_CMSSW_12_4_0_GRun_postEE_configDump_mixPU import cms, process
   #update_jmeCalibs = True
@@ -179,9 +180,9 @@ if hasattr(process, 'FastTimerService'):
 ## customised JME collections
 from JMETriggerAnalysis.Common.customise_hlt_puppi import *
 #process = addPaths_MC_JMECalo(process)
-#process = addPaths_MC_JMEPFCluster(process)
-#process = addPaths_MC_JMEPF(process)
-#process = addPaths_MC_JMEPFCHS(process)
+process = addPaths_MC_JMEPFCluster(process)
+process = addPaths_MC_JMEPF(process)
+process = addPaths_MC_JMEPFCHS(process)
 [process,listOfPaths] = addPaths_MC_JMEPFPuppi(process, listOfPaths)
 
 
@@ -474,7 +475,7 @@ process.JMETriggerNTuple = cms.EDAnalyzer('JMETriggerNTuple',
     #hltPFCHSMETTypeOne = cms.InputTag('hltPFCHSMETTypeOne'),
 
     #hltPFPuppiMET = cms.InputTag('hltPFPuppiMET'),
-    hltPFPuppiMETTypeOne = cms.InputTag('hltPFPuppiMETTypeOne'),
+    #hltPFPuppiMETTypeOne = cms.InputTag('hltPFPuppiMETTypeOne'),
   ),
 
 
