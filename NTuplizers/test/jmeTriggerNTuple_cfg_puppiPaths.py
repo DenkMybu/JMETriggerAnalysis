@@ -180,9 +180,9 @@ if hasattr(process, 'FastTimerService'):
 ## customised JME collections
 from JMETriggerAnalysis.Common.customise_hlt_puppi import *
 #process = addPaths_MC_JMECalo(process)
-process = addPaths_MC_JMEPFCluster(process)
-process = addPaths_MC_JMEPF(process)
-process = addPaths_MC_JMEPFCHS(process)
+#process = addPaths_MC_JMEPFCluster(process)
+#process = addPaths_MC_JMEPF(process)
+#process = addPaths_MC_JMEPFCHS(process)
 [process,listOfPaths] = addPaths_MC_JMEPFPuppi(process, listOfPaths)
 
 

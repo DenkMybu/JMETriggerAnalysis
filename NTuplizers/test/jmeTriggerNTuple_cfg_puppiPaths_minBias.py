@@ -59,7 +59,7 @@ opts.register('keepPFPuppi', False,
               vpo.VarParsing.multiplicity.singleton,
               vpo.VarParsing.varType.bool,
               'keep full collection of PFlow and PFPuppi candidates')
-opts.register('useMixedTrk', True,
+opts.register('useMixedTrk', False,
               vpo.VarParsing.multiplicity.singleton,
               vpo.VarParsing.varType.bool,
               'use  full + pixel tracks in PF')
@@ -184,7 +184,7 @@ from JMETriggerAnalysis.Common.customise_hlt_puppi import *
 #process = addPaths_MC_JMEPFCluster(process)
 #process = addPaths_MC_JMEPF(process)
 #process = addPaths_MC_JMEPFCHS(process)
-[process,listOfPaths] = addPaths_MC_JMEPFPuppi(process, listOfPaths)
+#[process,listOfPaths] = addPaths_MC_JMEPFPuppi(process, listOfPaths)
 
 
 
@@ -503,7 +503,7 @@ if opts.useMixedTrk:
 
 # max number of events to be processed
 #process.maxEvents.input = opts.maxEvents
-process.maxEvents.input = 10000
+process.maxEvents.input = 1000
 
 # number of events to be skipped
 process.source.skipEvents = cms.untracked.uint32(opts.skipEvents)
