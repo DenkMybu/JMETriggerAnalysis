@@ -410,12 +410,12 @@ def addPaths_MC_JMEPFCHS(process):
       src = cms.InputTag('hltAK4PFCHSJets'),
       type1JetPtThreshold = cms.double(30.0),
     )
-
+    
     process.hltPFCHSMETTypeOne = cms.EDProducer('CorrectedPFMETProducer',
       src = cms.InputTag('hltPFCHSMET'),
       srcCorrections = cms.VInputTag('hltPFCHSMETCorrection:type1'),
     )
-
+    
     ## Sequence: MET CHS
     process.HLTPFCHSMETSequence = cms.Sequence(
         process.hltParticleFlowCHS
@@ -423,7 +423,7 @@ def addPaths_MC_JMEPFCHS(process):
       + process.hltPFCHSMETCorrection
       + process.hltPFCHSMETTypeOne
     )
-
+    
     ## Path
     process.MC_JMEPFCHS_v1 = cms.Path(
         process.HLTBeginSequence
@@ -727,19 +727,19 @@ def addPaths_MC_JMEPFPuppi(process,listOfPaths):
       src = cms.InputTag('hltAK4PFPuppiJets'),
       type1JetPtThreshold = cms.double(30.0),
     )
-
+    
     process.hltPFPuppiMETTypeOne = cms.EDProducer('CorrectedPFMETProducer',
       src = cms.InputTag('hltPFPuppiMET'),
       srcCorrections = cms.VInputTag('hltPFPuppiMETCorrection:type1'),
     )
-
+    
     process.HLTPFPuppiMETSequence = cms.Sequence(
         process.hltPFPuppiNoLep
       + process.hltPFPuppiMET
       + process.hltPFPuppiMETCorrection
       + process.hltPFPuppiMETTypeOne
     )
-
+    
     ## Paths
 
     # Reconstruction path
@@ -901,5 +901,9 @@ def addPaths_MC_JMEPFPuppi(process,listOfPaths):
       process.schedule_().append(process.HLT_PFPuppiJet60_v1)
       process.schedule_().append(process.HLT_PFPuppiJet110_v1)
     '''
+
+    if process.schedule_():
+      process.schedule_().append(process.MC_JMEPFPuppi_v1)
+
 
     return [process,listOfPaths]
